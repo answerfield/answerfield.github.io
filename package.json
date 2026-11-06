@@ -1,0 +1,24 @@
+{
+  "name": "answerfield-site",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Doku-Seite von answerfield: Aufgaben schreiben, mit Aufgaben arbeiten, Hintergrund, Playground",
+  "scripts": {
+    "playground": "node scripts/playground.mjs",
+    "examples": "node scripts/examples.mjs",
+    "dev": "node scripts/playground.mjs && node scripts/examples.mjs && vitepress dev",
+    "build": "node scripts/playground.mjs && node scripts/examples.mjs && vitepress build",
+    "preview": "vitepress preview --port 4173",
+    "check": "af check examples && af format examples --check",
+    "test": "npm run check"
+  },
+  "devDependencies": {
+    "@answerfield/cli": "https://github.com/answerfield/af-cli/releases/download/v0.1.0/answerfield-cli-0.1.0.tgz",
+    "@answerfield/language": "https://github.com/answerfield/af-language/releases/download/v0.1.0/answerfield-language-0.1.0.tgz",
+    "@answerfield/playground": "https://github.com/answerfield/af-studio/releases/download/v0.1.2/answerfield-playground-0.1.2.tgz",
+    "@answerfield/runtime-core": "https://github.com/answerfield/af-runtime/releases/download/v0.1.0/answerfield-runtime-core-0.1.0.tgz",
+    "@answerfield/runtime-wc": "https://github.com/answerfield/af-runtime/releases/download/v0.1.0/answerfield-runtime-wc-0.1.0.tgz",
+    "vitepress": "^1.6.4"
+  }
+}

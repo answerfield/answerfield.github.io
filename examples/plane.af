@@ -1,0 +1,50 @@
+// #region figure
+item rectangle "Ein Rechteck im Gitter" {
+  plane(x: 0 .. 8, y: 0 .. 5, grid: 1, width: 20em) {
+    polygon(points: [(1 | 1), (5 | 1), (5 | 3), (1 | 3)], tone: accent)
+    dot(at: (1 | 1), label: "A")
+    dot(at: (5 | 3), label: "C")
+  }
+  p { "Das Rechteck ist " size = NumberGap(label: "Fläche in Kästchen") " Kästchen groß." }
+}
+
+coding rectangle {
+  size: correct(size == 8)
+}
+// #endregion figure
+
+// #region point
+/** Ein Punkt zum Setzen im Gitter. Antwort: der Punkt. */
+component GridPoint(label: Content, state point: Point? = none): response Point? {
+  plane(x: 0 .. 6, y: 0 .. 4, grid: 1, width: 18em) {
+    value(bind: point, min: (0 | 0), max: (6 | 4), step: 1, label: label, display: "P")
+  }
+  response point
+}
+
+item point "Einen Punkt setzen" {
+  p "Setze den Punkt P auf (4 | 3)."
+  spot = GridPoint(label: "Punkt P")
+}
+
+coding point {
+  spot: correct(spot == (4 | 3))
+}
+// #endregion point
+
+// #region measure
+item ruler "Eine Strecke messen" {
+  p "Miss die Strecke AB mit dem Lineal."
+  plane(x: 0 .. 12, y: 0 .. 6, width: 28em) {
+    segment((2 | 4), (8 | 4))
+    dot(at: (2 | 4), label: "A")
+    dot(at: (8 | 4), label: "B")
+    Ruler(at: (1 | 1), min: (0 | 0), max: (12 | 6))
+  }
+  p { "AB ist " length = NumberGap(label: "Länge in cm") " cm lang." }
+}
+
+coding ruler {
+  length: correct(length in 59/10 .. 61/10)
+}
+// #endregion measure

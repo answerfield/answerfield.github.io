@@ -1,0 +1,7 @@
+node_modules/
+.vitepress/dist/
+.vitepress/cache/
+# beim Bauen aus @answerfield/playground übernommen (scripts/playground.mjs)
+public/playground/
+# beim Bauen aus examples/ übersetzt (scripts/examples.mjs)
+public/bundles/

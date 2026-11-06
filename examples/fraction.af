@@ -1,0 +1,7 @@
+item fraction "Brüche" {
+  p { "Kürze den Bruch 6/8: " reduced = Gap(label: "gekürzter Bruch") }
+}
+
+coding fraction {
+  reduced: correct(number(reduced) == 3/4 and is_reduced(reduced))
+}

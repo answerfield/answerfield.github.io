@@ -1,0 +1,37 @@
+// #region pool
+item pool "Im Schwimmbad" {
+  p {
+    "Das Schwimmbecken ist 25 m lang. Mia schwimmt 8 Bahnen."
+    variant(simple_language) "Das Becken ist 25 m lang. Mia schwimmt 8-mal von einem Ende zum anderen."
+    variant(easy_language) "Ein Becken ist 25 Meter lang. Mia schwimmt 8-mal durch das Becken."
+  }
+  p { "Mia schwimmt " distance = NumberGap(label: "Strecke in Metern") " Meter." }
+}
+
+coding pool {
+  distance: correct(distance == 200)
+}
+// #endregion pool
+
+// #region poster
+item poster "Der Aushang" {
+  deny({read_aloud, simple_language, easy_language}, reason: "misst Leseverstehen")
+  p "Das Hallenbad bleibt ab Montag zwei Wochen geschlossen. Das Freibad öffnet dafür schon am Samstag."
+  open = Choice(label: "Wo kann man am nächsten Samstag schwimmen?",
+                options: ["im Hallenbad", "im Freibad", "nirgends"])
+}
+
+coding poster {
+  open: correct(open == {2})
+}
+// #endregion poster
+
+// #region booklet
+booklet swimming "Schwimmen" {
+  allow({magnification, contrast, simple_language, easy_language, read_aloud, extended_time})
+  part("Aufgaben", time: 15min) {
+    pool
+    poster
+  }
+}
+// #endregion booklet

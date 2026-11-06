@@ -1,0 +1,11 @@
+item garden "Das Gemüsebeet" {
+  p {
+    "Ein Beet ist 4 m lang und 3 m breit. Es ist "
+    area = NumberGap(label: "Fläche in m²")
+    " m² groß."
+  }
+}
+
+coding garden {
+  area: correct(area == 12)
+}

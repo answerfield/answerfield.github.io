@@ -1,0 +1,82 @@
+// #region diagnostic
+item rounding "Runden" {
+  p { "Runde 3,46 auf Zehntel: " rounded = Gap(label: "gerundete Zahl", width: 4em) }
+}
+
+coding rounding {
+  rounded: codes(
+    code(1, "richtig", score: 2, when: normalize(rounded, spaces: remove) == "3,5"),
+    code(2, "Wert richtig, Schreibweise nicht", score: 1, when: number(rounded) == 3.5),
+    code(3, "abgeschnitten statt gerundet", when: number(rounded) == 3.4),
+    code(4, "auf Ganze gerundet", when: number(rounded) == 3))
+}
+// #endregion diagnostic
+
+// #region open
+/** Eine Kette aus Perlen zum Anklicken. Antwort: die Nummern der gefärbten Perlen. */
+component Beads(count: Int, label: Content, state colored: Set<Int> = {}): response Set<Int> {
+  group(label: label) {
+    p {
+      for i in 1 .. count {
+        toggle(look: highlight, checked: i in colored, label: "Perle {i}",
+               on check: colored := colored + {i}, on uncheck: colored := colored - {i}) {
+          if i in colored then "●" else "○"
+        }
+      }
+    }
+  }
+  response colored
+}
+
+item beads "Die Perlenkette" {
+  p "Färbe 4 der 10 Perlen. Welche du nimmst, ist egal."
+  colored = Beads(count: 10, label: "Kette aus 10 Perlen")
+}
+
+coding beads {
+  colored: codes(
+    code(1, "richtig", score: 1, when: size(colored) == 4),
+    code(2, "die ungefärbten gezählt", when: size(colored) == 6))
+}
+// #endregion open
+
+// #region several
+item grid "Ein Punkt, zwei Zahlen" {
+  p { "Der Punkt P liegt bei ( " x = NumberGap(label: "x-Wert") " | " y = NumberGap(label: "y-Wert") " )." }
+  p "Er ist 4 nach rechts und 3 nach oben vom Ursprung entfernt."
+  p { "Nenne zwei Primzahlen zwischen 10 und 20: " a = Gap(label: "erste Primzahl", width: 3em)
+    " und " b = Gap(label: "zweite Primzahl", width: 3em)
+  }
+}
+
+coding grid {
+  point: correct(x == 4 and y == 3)
+  primes: correct(accepted([a, b], ["11", "13", "17", "19"]) == 2)
+  total: sum_score(point, primes)
+}
+// #endregion several
+
+// #region text
+item rope "Das Seil" {
+  p { "Ein Seil ist 1,2 m lang. Das sind " length = Gap(label: "Länge mit Einheit", width: 6em) "." }
+  p { "Wie heißt die Zahl über dem Bruchstrich? " name = Gap(label: "Name", width: 8em) }
+}
+
+coding rope {
+  length: correct(quantity(length, "cm") == 120)
+  name: correct(accept(name, "(der) Zähler", typos: 1))
+}
+// #endregion text
+
+// #region manual
+item explain "Begründen" {
+  p "Ist 0,5 größer als 0,45? Begründe."
+  reason = FreeText(label: "Deine Begründung")
+}
+
+coding explain {
+  reason: correct(manual("vergleicht die Zehntel (5 > 4) oder erweitert auf gleiche Stellenzahl",
+                         yes: ["0,50 ist mehr als 0,45", "5 Zehntel sind mehr als 4 Zehntel"],
+                         no: ["0,5 ist kürzer", "weil 5 kleiner als 45 ist"]))
+}
+// #endregion manual

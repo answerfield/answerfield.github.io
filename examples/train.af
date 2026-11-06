@@ -1,0 +1,26 @@
+// #region item
+item train "Die Zugfahrt" {
+  p "Ein Zug fährt um 9:40 Uhr ab und kommt um 11:15 Uhr an."
+  way = Choice(label: "Mit welcher Rechnung findest du die Fahrzeit?",
+               options: ["11:15 − 9:40", "11:15 + 9:40", "9:40 − 11:15"])
+  p { "Die Fahrt dauert " duration = NumberGap(label: "Fahrzeit in Minuten") " Minuten." }
+  p {
+    "Das ist "
+    compare = Select(label: "länger oder kürzer", options: ["länger", "kürzer"])
+    " als zwei Stunden."
+  }
+  reason = FreeText(label: "Wie hast du gerechnet?")
+}
+// #endregion item
+
+// #region coding
+coding train {
+  way: correct(way == {1})
+  duration: codes(
+    code(1, "richtig", score: 1, when: duration == 95),
+    code(2, "1 h 35 min als 135 gelesen", when: duration == 135))
+  compare: correct(compare == 2)
+  reason: correct(manual("nennt einen Rechenweg"))
+  total: sum_score(way, duration, compare)
+}
+// #endregion coding

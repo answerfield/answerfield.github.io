@@ -1,0 +1,11 @@
+booklet everyday "Rechnen im Alltag" {
+  part("Einführung") {
+    instruction("So geht der Test") {
+      p "Du bearbeitest zwei Aufgaben. Mit „Weiter“ und „Zurück“ wechselst du zwischen ihnen."
+    }
+  }
+  part("Aufgaben", time: 10min, navigation: free) {
+    garden
+    train
+  }
+}

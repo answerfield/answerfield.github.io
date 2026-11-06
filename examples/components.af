@@ -1,0 +1,58 @@
+// #region fn
+fn minutes(hours: Int, mins: Int): Int = hours * 60 + mins
+
+item bus "Der Schulbus" {
+  p "Der Bus fährt um 7:50 Uhr ab und ist um 8:25 Uhr an der Schule."
+  p { "Der Bus fährt " ride = NumberGap(label: "Fahrzeit in Minuten") " Minuten." }
+}
+
+coding bus {
+  ride: correct(ride == minutes(8, 25) - minutes(7, 50))
+}
+// #endregion fn
+
+// #region display
+/** Kreis aus `parts` Teilen, `filled` davon gefärbt. Ohne Antwort. */
+component Pie(parts: Int, filled: Int, label: Content) {
+  plane(x: -1.1 .. 1.1, y: -1.1 .. 1.1, width: 8em) {
+    group(role: group, label: label) {
+      for i in 1 .. parts { sector(i, of: parts, tone: if i <= filled then accent else neutral) }
+    }
+  }
+}
+
+item cake "Die Torte" {
+  Pie(parts: 8, filled: 3, label: "Torte aus 8 Stücken, 3 gefärbt")
+  p { "Gefärbt ist " eaten = Gap(label: "Anteil als Bruch", width: 4em) " der Torte." }
+}
+
+coding cake {
+  eaten: correct(number(eaten) == 3/8)
+}
+// #endregion display
+
+// #region response
+/** Bewertung mit Sternen. Antwort: Zahl der Sterne, 0 = keiner. */
+component Stars(label: Content, max: Int = 5, state stars: Int = 0): response Int {
+  group(role: radiogroup, label: label) {
+    p {
+      for i in 1 .. max {
+        toggle(role: radio, look: highlight, checked: i == stars, label: "{i} von {max} Sternen",
+               on check: stars := i, on uncheck: stars := 0) { if i <= stars then "★" else "☆" }
+      }
+    }
+  }
+  response stars
+}
+
+item rating "Wie war es?" {
+  difficulty = Stars(label: "Wie schwer fandest du die letzte Aufgabe?")
+}
+
+coding rating {
+  difficulty: codes(
+    code(1, "leicht", when: difficulty <= 2),
+    code(2, "mittel", when: difficulty == 3),
+    code(3, "schwer", when: difficulty >= 4))
+}
+// #endregion response

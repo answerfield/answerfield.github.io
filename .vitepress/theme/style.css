@@ -1,0 +1,95 @@
+/* Eigene Farben über den Variablen des Standard-Themes */
+:root {
+  --vp-c-brand-1: #1f6f8b;
+  --vp-c-brand-2: #2a86a6;
+  --vp-c-brand-3: #3a9cbf;
+  --vp-c-brand-soft: rgba(42, 134, 166, 0.14);
+  --vp-home-hero-name-color: var(--vp-c-brand-1);
+}
+
+.dark {
+  --vp-c-brand-1: #6cc3e0;
+  --vp-c-brand-2: #4fb0d2;
+  --vp-c-brand-3: #3a9cbf;
+  --vp-c-brand-soft: rgba(108, 195, 224, 0.16);
+}
+
+/* Beispiel neben seiner Vorschau: <div class="af-side"> um Code und <AfPreview>. Seiten mit `pageClass: af-wide`
+   bekommen dafür mehr Breite; unter 1100px stehen beide untereinander. */
+.af-wide .VPDoc .container,
+.af-wide .VPDoc .content-container {
+  max-width: 1180px !important;
+}
+.af-side {
+  display: grid;
+  gap: 16px;
+  align-items: start;
+}
+.af-side > div[class*='language-'] {
+  margin: 16px 0;
+}
+@media (min-width: 1100px) {
+  .af-side {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+  }
+}
+/* Fließtext bleibt auf breiten Seiten lesbar schmal; nur Beispiele mit Vorschau nutzen die volle Breite */
+.af-wide .vp-doc > div > :is(p, ul, ol, h1, h2, h3, table, .af-preview) {
+  max-width: 760px;
+}
+
+/* Mehrere Vorschauen derselben Aufgabe nebeneinander (z. B. je Anpassung) */
+.af-grid {
+  display: grid;
+  gap: 0 16px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+/* Diagramme als SVG (concepts.md, embedding.md); Farben aus dem Theme, hell und dunkel */
+.af-diagram {
+  margin: 20px 0;
+}
+.af-diagram svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  font-family: var(--vp-font-family-base);
+  font-size: 13px;
+}
+.af-diagram text {
+  fill: var(--vp-c-text-1);
+  text-anchor: middle;
+  dominant-baseline: middle;
+}
+.af-diagram text.muted,
+.af-diagram text.label {
+  fill: var(--vp-c-text-2);
+  font-size: 12px;
+}
+.af-diagram text.group-label {
+  fill: var(--vp-c-text-2);
+  text-anchor: start;
+  font-weight: 600;
+}
+.af-diagram .box {
+  fill: var(--vp-c-bg-soft);
+  stroke: var(--vp-c-brand-1);
+  stroke-width: 1.2;
+}
+.af-diagram .group {
+  fill: none;
+  stroke: var(--vp-c-divider);
+  stroke-width: 1.2;
+  stroke-dasharray: 5 4;
+}
+.af-diagram .edge {
+  fill: none;
+  stroke: var(--vp-c-text-2);
+  stroke-width: 1.4;
+}
+.af-diagram .edge.dashed {
+  stroke-dasharray: 5 4;
+}
+.af-diagram .arrow {
+  fill: var(--vp-c-text-2);
+}
